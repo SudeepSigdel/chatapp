@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Websocket</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <div id="register-view" class="view">
+        <h1>Register</h1>
+        <form action="" onsubmit="register(event)">
+            <label>Email:</label>
+            <input type="text" id="email-register" placeholder="user@example.com"/><br>
+            <label>Password:</label>
+            <input type="password" id="password-register"/><br>
+            <label>Name:</label>
+            <input type="text" id="name-register"/>
+            <button>Register</button>
+        </form>
+    </div>
+
+    <div id="login-view" class="view">
+        <h1>Login</h1>
+        <form action="" onsubmit="login(event)">
+            <label>Email:</label>
+            <input type="text" id="email" placeholder="user@example.com"/><br>
+            <label>Password:</label>
+            <input type="password" id="password"/><br>
+            <button>Enter Chat</button>
+        </form>
+        <span id="text-box-login"></span>
+        <button onclick="to_register()">Register</button>
+    </div>
+
+    <div id="chat-view" class="view hidden">
+        <form action="" onsubmit="SendMessage(event)">
+            <input type="text" id="MessageBox" autocomplete="off" />
+            <button>Send</button>
+        </form>
+        <br />
+        <button onclick="logout()">logout</button>
+        <ul id="messages">
+        </ul>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+
+</html>
