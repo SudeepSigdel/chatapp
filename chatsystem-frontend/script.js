@@ -1,4 +1,5 @@
 let ws = null
+let target_user_id = null
 
 function router() {
     const hash = window.location.hash
@@ -30,7 +31,7 @@ async function register(event) {
     const password = document.getElementById("password-register").value;
     const name = document.getElementById("name-register").value;
     try {
-        const response = await fetch("http://127.0.0.1:8000/register", {
+        const response = await fetch("http://127.0.0.1:8000/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -110,7 +111,7 @@ function to_register() {
 function connectWebSocket() {
     const token = localStorage.getItem("access_token")
     if (!token) { window.location.hash = "#/login" };
-    ws = new WebSocket(`ws://localhost:8000/ws?token=${token}`);
+    ws = new WebSocket(`ws://localhost:8000/ws?token=${token}&user_id=${target_user_id}`);
     ws.onmessage = function (event) {
         var messages = document.getElementById("messages")
         var message = document.createElement("li")

@@ -1,4 +1,4 @@
-from sqlmodel import Column, SQLModel, Field, TIMESTAMP, text
+from sqlmodel import Column, ForeignKey, Integer, SQLModel, Field, TIMESTAMP, text
 from pydantic import EmailStr
 from datetime import datetime
 from fastapi import WebSocket
@@ -38,3 +38,13 @@ class Connection():
         self.websocket= websocket
         self.user_id= user_id
         self.username= username
+
+class ActiveUsers(SQLModel):
+    user_id:  int
+    username: str
+
+class MessageBase(SQLModel):
+    sender: int = Field(sa_column=Column(Integer, ForeignKey("users.id", ondelete="CASCADE")))
+    receiver: int = Field(sa_column=Column(Integer, ForeignKey("users.id", ondelete="CASCADE")))
+    message: str
+
