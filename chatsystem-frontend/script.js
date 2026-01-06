@@ -110,8 +110,9 @@ function to_register() {
 
 function connectWebSocket() {
     const token = localStorage.getItem("access_token")
+    // &user_id=${target_user_id}
     if (!token) { window.location.hash = "#/login" };
-    ws = new WebSocket(`ws://localhost:8000/ws?token=${token}&user_id=${target_user_id}`);
+    ws = new WebSocket(`ws://localhost:8000/ws?token=${token}`);
     ws.onmessage = function (event) {
         var messages = document.getElementById("messages")
         var message = document.createElement("li")

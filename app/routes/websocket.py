@@ -1,6 +1,5 @@
 import asyncio
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
-from typing import List, Dict
 from sqlmodel import Session
 from app import oauth2, database, models
 
@@ -66,12 +65,12 @@ async def Websocket(websocket: WebSocket):
         await websocket.close(code=1008)
         return
 
-    target_user_id = websocket.query_params.get("user_id")
-    try:
-        target_user_id = int(target_user_id) if target_user_id else None
-    except Exception:
-        await websocket.close(code=1008)
-        return
+    # target_user_id = websocket.query_params.get("user_id")
+    # try:
+    #     target_user_id = int(target_user_id) if target_user_id else None
+    # except Exception:
+    #     await websocket.close(code=1008)
+    #     return
 
     db = Session(database.engine)
     user = oauth2.get_current_user(db, token)
@@ -94,12 +93,12 @@ async def Websocket(websocket: WebSocket):
             data = await websocket.receive_text()
             message = f"{user.name} says: {data}"
 
-            if target_user_id:
-                if user.id != target_user_id: await manager.private_message(user.id, message) #type: ignore
-                await manager.private_message(target_user_id, message)
+            # if target_user_id:
+            #     if user.id != target_user_id: await manager.private_message(user.id, message) #type: ignore
+            #     await manager.private_message(target_user_id, message)
 
-            else:
-                await manager.broadcast(message)
+            # else:
+            await manager.broadcast(message)
     except WebSocketDisconnect:
         pass
     finally:
